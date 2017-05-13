@@ -1,8 +1,8 @@
 {
-  "name": "WaveRider",
+  "name": "DataGrabber",
   "version": "1.0.0",
   "description": "",
-  "main": "rider.js",
+  "main": "datagrabber.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,6 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/autobahn": "^0.9.35",
+    "@types/mongodb": "^2.2.2",
+    "autobahn": "^17.5.1",
+    "mongodb": "^2.2.26",
     "typescript": "^2.2.2"
   },
   "devDependencies": {

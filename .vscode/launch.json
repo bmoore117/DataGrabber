@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceRoot}\\rider.js",
+            "program": "${workspaceRoot}\\datagrabber.js",
             "outFiles": []
         },
         {
