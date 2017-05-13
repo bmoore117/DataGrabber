@@ -11,7 +11,10 @@ var dbConn = mongodb_1.MongoClient.connect("mongodb://localhost:27017/db", funct
         var exchangeConn = new autobahn_1.Connection({ url: 'wss://api.poloniex.com', realm: 'realm1' });
         exchangeConn.onopen = function (session) {
             function marketEvent(args, kwargs) {
-                collection.insert(args);
+                if (args.length > 0) {
+                    collection.insert(args);
+                    console.log("object stored");
+                }
             }
             session.subscribe('BTC_XMR', marketEvent);
         };
