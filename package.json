@@ -10,10 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/autobahn": "^0.9.35",
     "@types/mongodb": "^2.2.2",
-    "autobahn": "^17.5.1",
-    "mongodb": "^2.2.26",
     "typescript": "^2.2.2"
   },
   "devDependencies": {
