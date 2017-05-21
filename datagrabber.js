@@ -12,6 +12,7 @@ var dbConn = mongodb_1.MongoClient.connect("mongodb://localhost:27017/db", funct
     db.createCollection('marketdata', function (error, collection) {
         var uri = url.parse("https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-pivx", true);
         setInterval(function () {
+            console.log("Polling for data");
             var req = https.request({
                 host: uri.host,
                 path: uri.path,
@@ -20,12 +21,13 @@ var dbConn = mongodb_1.MongoClient.connect("mongodb://localhost:27017/db", funct
                 res.on('data', function (data) {
                     var doc = JSON.parse(data.toString());
                     collection.insert(doc);
+                    console.log("Inserted row");
                 });
             });
             req.end();
             req.on('error', function (err) {
                 console.error(err);
             });
-        }, 5 * 1000);
+        }, 5 * 60 * 1000);
     });
 });

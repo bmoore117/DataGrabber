@@ -14,6 +14,7 @@ var dbConn = MongoClient.connect("mongodb://localhost:27017/db", function (error
         var uri = url.parse("https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-pivx", true);
 
         setInterval(function () {
+            console.log("Polling for data");
             var req = https.request({
                 host: uri.host,
                 path: uri.path,
@@ -22,6 +23,7 @@ var dbConn = MongoClient.connect("mongodb://localhost:27017/db", function (error
                 res.on('data', function (data) {
                     var doc = JSON.parse(data.toString());
                     collection.insert(doc);
+                    console.log("Inserted row");
                 })
             });
 
@@ -31,7 +33,7 @@ var dbConn = MongoClient.connect("mongodb://localhost:27017/db", function (error
                 console.error(err);
             });
 
-        }, 5 * 1000);
+        }, 5 * 60 * 1000);
 
     });
 });
