@@ -1,2 +1,1 @@
-Start-Job { node C:\Users\Ben\Code\DataGrabber
-\datagrabber.js > C:\Users\Ben\log.txt }
+Start-Job { node C:\Users\Ben\Code\DataGrabber\datagrabber.js 15 5 > C:\Users\Ben\log.txt }
