@@ -10,7 +10,8 @@ var dbConn = mongodb_1.MongoClient.connect("mongodb://localhost:27017/db", funct
     }
     console.log("Connected to database");
     db.createCollection('marketdata', function (error, collection) {
-        var uri = url.parse("https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-pivx", true);
+        var uri = url.parse("https://bittrex.com/api/v1.1/public/getmarketsummary?market=btc-eth", true);
+        var samplePeriod = { sample: [] };
         setInterval(function () {
             console.log("Polling for data");
             var req = https.request({
@@ -20,14 +21,17 @@ var dbConn = mongodb_1.MongoClient.connect("mongodb://localhost:27017/db", funct
                 res.setEncoding('utf8');
                 res.on('data', function (data) {
                     var doc = JSON.parse(data.toString());
-                    collection.insert(doc);
-                    console.log("Inserted row");
+                    samplePeriod.sample.push(doc.result[0]);
                 });
             });
             req.end();
             req.on('error', function (err) {
                 console.error(err);
             });
+        }, 15 * 1000);
+        setInterval(function () {
+            console.log("Inserting last 5 minutes of data");
+            collection.insert(samplePeriod);
         }, 5 * 60 * 1000);
     });
 });
