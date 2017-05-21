@@ -3,6 +3,12 @@ import * as url from 'url';
 import * as https from 'https';
 import { IncomingMessage } from 'http';
 
+var pollFreqSeconds = Number(process.argv[2]);
+var samplingPeriodMinutes = Number(process.argv[3]);
+
+console.log("Polling frequency " + pollFreqSeconds + " seconds");
+console.log("Sampling period " + samplingPeriodMinutes + " minutes");
+
 var dbConn = MongoClient.connect("mongodb://localhost:27017/db", function (error: MongoError, db: Db) {
     if (error) {
         console.error(error);
@@ -33,12 +39,13 @@ var dbConn = MongoClient.connect("mongodb://localhost:27017/db", function (error
             req.on('error', function (err: Error) {
                 console.error(err);
             });
-        }, 15 * 1000);
+        }, pollFreqSeconds * 1000);
 
         setInterval(function() {
             console.log("Inserting last 5 minutes of data")
             collection.insert(samplePeriod);
-        }, 5 * 60 * 1000);
+            samplePeriod = {sample: []};
+        }, samplingPeriodMinutes * 60 * 1000);
 
     });
 });
